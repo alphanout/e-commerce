@@ -5,15 +5,22 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 export default (req, res, next) => {
-    const password = req.headers.password;
-    const email = req.headers.email;
-    const firstName = req.headers.firstName;
-    const lastName = req.headers.lastName;
+    const password = req.body.password;
+    const email = req.body.email;
+    const firstName = req.body.first_name;
+    const lastName = req.body.last_name;
+    const phone_no = req.body.phone_no;
+    // console.log(`name:${email}  ${validateEmail(email)}`);
     if (validator.isAlpha(firstName) && validator.isAlpha(lastName) && validateEmail(email) && validator.isAlpha(password)) {
         if (validator.isByteLength(password, {
                 min: 8,
                 max: 32
             })) {
+            if (!validator.isMobilePhone(phone_no))
+                return res.status(400).send({
+                    error: true,
+                    message: 'invalid phone no.'
+                });
 
             next();
         } else {
@@ -22,6 +29,9 @@ export default (req, res, next) => {
             });
         }
     } else {
+        if (validateEmail(email)) res.status(400).send({
+            error: "provide valid email"
+        });
         res.status(400).send({
             error: "All parameters are required"
         });

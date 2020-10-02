@@ -1,10 +1,10 @@
-import * as express from 'express';
+import express from 'express';
 import bodyParser from "body-parser";
 // import cors from "cors";
-import routes from './app/routes';
-import authenticateJWT from './app/middleware/authJwt';
-import verifySignup from './app/middleware/verifySignup';
-import * as cont from "./app/controllers/customer.controller";
+import routes from './app/routes/routes.js';
+import authenticateJWT from './app/middleware/authJwt.js';
+import verifySignup from './app/middleware/verifySignup.js';
+import cont from "./app/controllers/customer.controller.js";
 
 class Server {
 
@@ -14,14 +14,14 @@ class Server {
         //   origin: "http://localhost:8080"
         // };
         // server.use(cors(this.corsOptions));
-        server.use(bodyParser.urlencoded({
+        this.server.use(bodyParser.urlencoded({
             extended: true
         }));
-        server.use(bodyParser.json());
+        this.server.use(bodyParser.json());
         this.port = process.env.PORT || 8080;
         this.middlewares();
         this.routes();
-        server.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             console.log(`Server is running on port ${this.port}.`);
         });
     }
@@ -29,22 +29,19 @@ class Server {
     middlewares() {
         this.server.use(express.json());
     }
-
     routes() {
-        this.server.get("/", (req, res) => {
+        this.server.get("/", (_req, res) => {
             res.status(200).send("Oh Hi There!");
         });
 
-        this.server.post("/login", (req, res) => {
-            // cont.login(req, res);
+        this.server.post("/signin", (req, res) => {
+            cont.login(req, res);
         });
 
         this.server.post("/signup", verifySignup, (req, res) => {
             cont.addCustomer(req, res);
         });
         this.server.use("/api", authenticateJWT, routes);
-        //this.server.use(routes);
     }
 }
-
 export default new Server().server;

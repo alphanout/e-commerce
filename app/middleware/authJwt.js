@@ -1,16 +1,21 @@
 import {
     secret
-} from "../config/auth.config";
+} from "../config/auth.config.js";
 import jwt from "jsonwebtoken";
 import validator from "validator";
-export default (req, res, next) => {
+const jwtAuth = (req, res, next) => {
     const authHeader = req.headers.authorization;
+    if(typeof authHeader  === 'undefined'){
+        return res.status(400).send({
+            error: "The apikey is required"
+        });
+    }
     if (validator.isJWT(authHeader)) {
         const token = authHeader.split(' ')[1];
         jwt.verify(token, secret, (err, user) => {
             if (err) {
                 return res.status(401).send({
-                    message: "Unautherized"
+                    message: 'Unautherized'
                 });
             }
             req.user = user;
@@ -23,3 +28,4 @@ export default (req, res, next) => {
         });
     }
 };
+export default jwtAuth;

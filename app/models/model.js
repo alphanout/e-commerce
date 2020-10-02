@@ -1,5 +1,5 @@
-import customerEnti from "./entity/customer";
+import { customer as cust } from "./entity/customer.js";
+import { address as add } from "./entity/address.js";
 //db create table user
-export default () => {
-    var customer = customerEnti();
-};
+export var customer = cust;
+export var address = add;

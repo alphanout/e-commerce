@@ -1,5 +1,4 @@
 import express from 'express';
-import contCustomer from "../controllers/customer.controller.js";
 const router = express.Router();
 
 router.get("/", function (_req, res) {

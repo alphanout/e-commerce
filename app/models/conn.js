@@ -36,7 +36,8 @@ db.customer.hasMany(db.address);
 db.address.belongsTo(db.customer);
 
 sequelize.sync({
-  // alter: true
+  alter: true
+  // force: true
 }).then(() => {
   console.log('db created table');
   console.log("");

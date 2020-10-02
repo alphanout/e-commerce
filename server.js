@@ -1,10 +1,8 @@
 import express from 'express';
 import bodyParser from "body-parser";
 // import cors from "cors";
-import routes from './app/routes/routes.js';
-import authenticateJWT from './app/middleware/authJwt.js';
-import verifySignup from './app/middleware/verifySignup.js';
-import cont from "./app/controllers/customer.controller.js";
+import customersRoutes from './app/routes/customers.routes.js';
+import customerRoutes from './app/routes/customer.routes.js';
 
 class Server {
 
@@ -33,15 +31,8 @@ class Server {
         this.server.get("/", (_req, res) => {
             res.status(200).send("Oh Hi There!");
         });
-
-        this.server.post("/signin", (req, res) => {
-            cont.login(req, res);
-        });
-
-        this.server.post("/signup", verifySignup, (req, res) => {
-            cont.addCustomer(req, res);
-        });
-        this.server.use("/api", authenticateJWT, routes);
+        this.server.use("/customers", customersRoutes);
+        this.server.use("/customer", customerRoutes);
     }
 }
 export default new Server().server;

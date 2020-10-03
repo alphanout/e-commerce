@@ -7,10 +7,13 @@ const _products = db.products;
 
 export default class products {
     constructor(products) {
-
+        this.id = products.params.products_id;
     }
 
-    async findAddressById() {
-        return await _products.findOne();
+    async findAll() {
+        return await _products.findAll();
+    }
+    async findById() {
+        return await _products.findByPk(this.id);
     }
 }

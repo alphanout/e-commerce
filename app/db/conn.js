@@ -8,8 +8,12 @@ import {
 } from "../config/db.config.js";
 import Sequelize from "sequelize";
 import {
+  category,
   customer,
-  address
+  address,
+  orders,
+  products,
+  reviews
 } from "./model.js";
 const sequelize = new Sequelize(DB, USER, PASSWORD, {
   host: HOST,
@@ -31,9 +35,30 @@ db.sequelize = sequelize;
 
 db.customer = sequelize.define("customer", customer);
 db.address = sequelize.define("address", address);
+db.category = sequelize.define("category", category);
+db.orders = sequelize.define("orders", orders);
+db.products = sequelize.define("products", products);
+db.reviews = sequelize.define("reviews", reviews);
 
 db.customer.hasMany(db.address);
 db.address.belongsTo(db.customer);
+
+db.products.hasMany(db.reviews);
+db.reviews.belongsTo(db.products);
+
+db.customer.hasMany(db.reviews);
+db.reviews.belongsTo(db.customer);
+
+db.customer.hasMany(db.orders);
+db.orders.belongsTo(db.customer);
+
+db.products.belongsToMany(db.category, {
+  through: 'ProductsCategory'
+});
+db.category.belongsToMany(db.products, {
+  through: 'ProductsCategory'
+});
+
 
 sequelize.sync({
   alter: true

@@ -1,7 +1,7 @@
 'user strict';
 import
 db
-from './conn.js';
+from '../db/conn.js';
 
 const _address = db.address;
 

@@ -1,0 +1,7 @@
+.vscode
+# .gitignore
+node_modules
+.jshintrc
+.idea
+sqltool*
+e-comm*

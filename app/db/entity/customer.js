@@ -1,5 +1,5 @@
 import DataTypes from "sequelize";
-export var customer = {
+export default {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

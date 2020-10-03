@@ -5,7 +5,7 @@ import {
 } from '../config/auth.config.js';
 import
 db
-from './conn.js';
+from '../db/conn.js';
 
 const _customer = db.customer;
 

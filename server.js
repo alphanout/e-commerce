@@ -3,6 +3,9 @@ import bodyParser from "body-parser";
 // import cors from "cors";
 import customersRoutes from './app/routes/customers.routes.js';
 import customerRoutes from './app/routes/customer.routes.js';
+import categoryRoutes from './app/routes/category.routes.js';
+import productRoutes from './app/routes/products.routes.js';
+import orderRoutes from './app/routes/order.routes.js';
 
 class Server {
 
@@ -33,6 +36,9 @@ class Server {
         });
         this.server.use("/customers", customersRoutes);
         this.server.use("/customer", customerRoutes);
+        this.server.use("/products", productRoutes);
+        this.server.use("/categories", categoryRoutes);
+        this.server.use("/orders", orderRoutes);
     }
 }
 export default new Server().server;

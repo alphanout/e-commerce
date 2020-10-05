@@ -16,7 +16,8 @@ export default class customer {
         this.last_name = customer.last_name;
         this.email = customer.email;
         this.phone_no = customer.phone_no;
-        this.customer_id = customer.customer.id;
+        if (customer.customer)
+            this.customer_id = customer.customer.id;
         this.credit_card = customer.credit_card;
     }
 

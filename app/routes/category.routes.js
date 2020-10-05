@@ -4,22 +4,33 @@ import express from 'express';
 import contCategory from "../controllers/category.controller.js";
 const router = express.Router();
 
-router.get("/inProduct/:product_id", validation, authenticateJWT, (req, res) => {
-    contCategory.getCategoryByProductId(req, res).catch(err => {
-        console.log(err);
-        return res.sendStatus(500);
-    });
+router.route("/inProduct/:product_id").get(validation(), authenticateJWT, (req, res) => {
+    if (parseInt(req.params.product_id))
+        contCategory.getCategoryByProductId(req, res).catch(err => {
+            console.log(err);
+            return res.sendStatus(500);
+        });
+    else
+        res.status(400).send({
+            error: "Invalid param product_id"
+        });
 });
-router.get("/", authenticateJWT, (req, res) => {
+router.route("/").get(validation(), authenticateJWT, (req, res) => {
     contCategory.getAll(req, res).catch(err => {
         console.log(err);
         return res.sendStatus(500);
     });
+
 });
-router.get("/:category_id", validation, authenticateJWT, (req, res) => {
-    contCategory.getById(req, res).catch(err => {
-        console.log(err);
-        return res.sendStatus(500);
-    });
+router.route("/:category_id").get(validation(), authenticateJWT, (req, res) => {
+    if (parseInt(req.params.category_id))
+        contCategory.getById(req, res).catch(err => {
+            console.log(err);
+            return res.sendStatus(500);
+        });
+    else
+        res.status(400).send({
+            error: "Invalid param category_id"
+        });
 });
 export default router;

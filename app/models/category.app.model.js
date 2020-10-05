@@ -13,21 +13,29 @@ export default class category {
     }
 
     async findAll() {
-        return await _category.findAll();
+        return await _category.findAll({
+            attributes: ["id", "name", "description"]
+        });
     }
     async findById() {
-        return await _category.findByPk(this.id);
+        return await _category.findByPk(this.id, {
+            attributes: ["id", "name", "description"]
+        });
     }
 
     async findByProductId() {
-        return await _category.findByPk({
+        return await _products.findAll({
             include: [{
-                model: _products,
-                as: 'products',
+                model: _category,
                 through: {
                     attributes: []
                 },
-            }]
+                attributes: ["id", "name", "description"],
+            }],
+            where: {
+                id: this.product_id
+            },
+            attributes: ["id", "name", "description", "price", "discounted_price"]
         });
     }
 }

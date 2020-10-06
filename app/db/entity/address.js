@@ -1,5 +1,5 @@
 import DataTypes from "sequelize";
-export var address = {
+export default {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

@@ -1,5 +1,5 @@
 import DataTypes from "sequelize";
-export var customer = {
+export default {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,7 +14,7 @@ export var customer = {
         allowNull: false
     },
     email: {
-        unique: true,
+        unique: 'email',
         type: DataTypes.STRING,
         validate: {
             isEmail: true,
@@ -25,7 +25,7 @@ export var customer = {
         }
     },
     phone_no: {
-        unique: true,
+        unique: 'phone_no',
         type: DataTypes.INTEGER,
         validate: {
             len: [10, 10],
@@ -37,15 +37,10 @@ export var customer = {
         allowNull: false
     },
     credit_card: {
+        // unique: 'credit_card',
         type: DataTypes.STRING,
         validate: {
             isCreditCard: true,
         }
     },
-
-    // username: {
-    //     unique: true,
-    //     type: type.STRING,
-    //     allowNull: false
-    // },
 };

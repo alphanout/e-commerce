@@ -5,8 +5,7 @@ import {
 } from '../config/auth.config.js';
 import
 db
-from './conn.js';
-import Op from "sequelize";
+from '../db/conn.js';
 
 const _customer = db.customer;
 
@@ -17,6 +16,9 @@ export default class customer {
         this.last_name = customer.last_name;
         this.email = customer.email;
         this.phone_no = customer.phone_no;
+        if (customer.customer)
+            this.customer_id = customer.customer.id;
+        this.credit_card = customer.credit_card;
     }
 
     async addCostumer() {
@@ -49,6 +51,65 @@ export default class customer {
         return await _customer.findOne({
             where: {
                 phone_no: this.phone_no
+            }
+        });
+    }
+    async updateCreditCard() {
+        return await _customer.update({
+            credit_card: this.credit_card,
+        }, {
+            where: {
+                id: this.customer_id,
+            }
+        });
+    }
+
+    async updatePhoneNo() {
+        return await _customer.update({
+            phone_no: this.phone_no,
+        }, {
+            where: {
+                id: this.customer_id,
+            }
+        });
+    }
+
+    async updatePassword() {
+        return await _customer.update({
+            password: this.password,
+        }, {
+            where: {
+                id: this.customer_id,
+            }
+        });
+    }
+
+    async updateEmail() {
+        return await _customer.update({
+            email: this.email,
+        }, {
+            where: {
+                id: this.customer_id,
+            }
+        });
+    }
+
+    async updateLastName() {
+        return await _customer.update({
+            last_name: this.last_name,
+        }, {
+            where: {
+                id: this.customer_id,
+            }
+        });
+    }
+
+    async updateFirstFame() {
+        return await _customer.update({
+            first_name: this.first_name,
+        }, {
+            where: {
+                id: this.customer_id,
             }
         });
     }

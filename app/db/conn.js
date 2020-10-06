@@ -13,7 +13,9 @@ import {
   address,
   orders,
   products,
-  reviews
+  reviews,
+  cart,
+  cartItem,
 } from "./model.js";
 const sequelize = new Sequelize(DB, USER, PASSWORD, {
   host: HOST,
@@ -39,6 +41,8 @@ db.category = sequelize.define("category", category);
 db.orders = sequelize.define("orders", orders);
 db.products = sequelize.define("products", products);
 db.reviews = sequelize.define("reviews", reviews);
+db.cart = sequelize.define("cart", cart);
+db.cartItem = sequelize.define("cartItem", cartItem);
 
 db.customer.hasMany(db.address);
 db.address.belongsTo(db.customer);
@@ -59,6 +63,15 @@ db.category.belongsToMany(db.products, {
   through: 'ProductsCategory'
 });
 
+db.customer.hasMany(db.cart);
+db.cart.belongsTo(db.customer);
+
+db.products.belongsToMany(db.cart, {
+  through: db.cartItem
+});
+db.cart.belongsToMany(db.products, {
+  through: db.cartItem
+});
 
 sequelize.sync({
   alter: true

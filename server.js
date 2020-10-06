@@ -6,6 +6,7 @@ import customerRoutes from './app/routes/customer.routes.js';
 import categoryRoutes from './app/routes/category.routes.js';
 import productRoutes from './app/routes/products.routes.js';
 import orderRoutes from './app/routes/order.routes.js';
+import cartRoutes from './app/routes/cart.routes.js';
 
 class Server {
 
@@ -39,6 +40,7 @@ class Server {
         this.server.use("/products", productRoutes);
         this.server.use("/categories", categoryRoutes);
         this.server.use("/orders", orderRoutes);
+        this.server.use("/cart", cartRoutes);
     }
 }
 export default new Server().server;
